@@ -20,8 +20,8 @@ before_install:
   - git clone https://github.com/libuv/libuv && cd libuv && git checkout tags/v1.28.0 && sh autogen.sh && ./configure && make && sudo make install && cd ..
 
 install:
-  - if [[ "$INSTALL" = "all" || "$INSTALL" = "hrtime" ]]; then yes | pecl install hrtime; fi
-  - if [[ "$INSTALL" = "all" || "$INSTALL" = "uv" ]]; then yes | pecl install uv-beta; fi
+  - if [ "$INSTALL" = "all" ] || [ "$INSTALL" = "hrtime" ]; then yes | pecl install hrtime; fi
+  - if [ "$INSTALL" = "all" ] || [ "$INSTALL" = "uv" ]; then yes | pecl install uv-beta; fi
   - composer install --no-interaction --ignore-platform-reqs
 
 script:
