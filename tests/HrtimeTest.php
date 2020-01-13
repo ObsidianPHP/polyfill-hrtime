@@ -11,8 +11,8 @@ namespace Obsidian\Polyfill\Hrtime\Tests;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @requires hrtime
- * @requires uv
+ * @requires ext-hrtime
+ * @requires ext-uv
  */
 class HrtimeTest extends TestCase {
 	function providerTestFunctions() {
