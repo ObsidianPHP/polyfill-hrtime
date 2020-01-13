@@ -1,0 +1,31 @@
+{
+    "name": "obsidian/polyfill-hrtime",
+    "description": "A polyfill for hrtime.",
+    "type": "library",
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "Obsidian",
+            "email": ""
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php-64bit": ">=7.1"
+    },
+    "require-dev": {
+        "ext-hrtime": "*",
+        "ext-uv": "*",
+        "phpunit/phpunit": "^7.0|^6.0"
+    },
+    "autoload": {
+        "files": [
+            "bootstrap.php"
+        ]
+    },
+    "autoload-dev": {
+        "PSR-4": {
+            "Obsidian\\Polyfill\\Hrtime\\tests\\": "tests"
+        }
+    }
+}

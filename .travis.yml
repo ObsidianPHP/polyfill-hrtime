@@ -1,0 +1,28 @@
+language: php
+
+cache:
+  directories:
+    - $HOME/.composer/cache/files
+
+php:
+  - 7.1
+  - 7.2
+  - 7.3
+  - 7.4
+
+env:
+  - EXT_INSTALL=all
+  - EXT_INSTALL=hrtime
+  - EXT_INSTALL=uv
+  - EXT_INSTALL=none
+
+before_install:
+  - git clone https://github.com/libuv/libuv && cd libuv && git checkout tags/v1.28.0 && sh autogen.sh && ./configure && make && sudo make install && cd ..
+
+install:
+  - sh -c "if [ '$INSTALL' = 'all' || '$INSTALL' = 'hrtime' ]; then yes | pecl install hrtime; fi"
+  - sh -c "if [ '$INSTALL' = 'all' || '$INSTALL' = 'uv' ]; then yes | pecl install uv-beta; fi"
+  - composer install --no-interaction
+
+script:
+  - ./vendor/bin/phpunit tests --configuration="./phpunit.xml.dist" --whitelist="src" --code-coverage-text
