@@ -4,6 +4,7 @@
  * Copyright 2020 ObsidianPHP, All Rights Reserved
  *
  * License: https://github.com/ObsidianPHP/polyfill-hrtime/blob/master/LICENSE
+ * @noinspection PhpComposerExtensionStubsInspection
  */
 
 namespace Obsidian\Polyfill\Hrtime;
