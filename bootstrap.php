@@ -6,11 +6,11 @@
  * License: https://github.com/ObsidianPHP/polyfill-hrtime/blob/master/LICENSE
  */
 
+require_once 'src/functions.php';
+
 if(function_exists('hrtime')) {
 	return;
 }
-
-require_once 'src/functions.php';
 
 use function Obsidian\Polyfill\Hrtime\hrtime_ext_uv;
 use function Obsidian\Polyfill\Hrtime\hrtime_ext_hrtime;
