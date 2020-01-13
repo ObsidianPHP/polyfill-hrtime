@@ -3,12 +3,6 @@
     "description": "A polyfill for hrtime.",
     "type": "library",
     "license": "Apache-2.0",
-    "authors": [
-        {
-            "name": "Obsidian",
-            "email": ""
-        }
-    ],
     "minimum-stability": "stable",
     "require": {
         "php-64bit": ">=7.1"
