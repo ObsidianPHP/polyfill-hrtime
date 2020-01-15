@@ -15,7 +15,7 @@
     },
     "autoload": {
         "files": [
-            "bootstrap.php"
+            "src/bootstrap.php"
         ]
     },
     "autoload-dev": {
