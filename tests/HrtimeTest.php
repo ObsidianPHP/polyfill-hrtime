@@ -17,24 +17,19 @@ use PHPUnit\Framework\TestCase;
 class HrtimeTest extends TestCase {
     function providerTestFunctions() {
         return array(
-            array('\\Obsidian\\Polyfill\\Hrtime\\hrtime_ext_uv', false),
-            array('\\Obsidian\\Polyfill\\Hrtime\\hrtime_ext_hrtime', false),
-            array('\\Obsidian\\Polyfill\\Hrtime\\hrtime_fallback', true)
+            array('\\Obsidian\\Polyfill\\Hrtime\\hrtime_ext_uv'),
+            array('\\Obsidian\\Polyfill\\Hrtime\\hrtime_ext_hrtime'),
+            array('\\Obsidian\\Polyfill\\Hrtime\\hrtime_fallback')
         );
     }
     
     /**
      * @dataProvider providerTestFunctions
      * @param callable  $function
-     * @param bool     $sleep
      */
-    function testHrtimeAsNumber(callable $function, bool $sleep) {
+    function testHrtimeAsNumber(callable $function) {
         $number = $function(true);
         $this->assertIsInt($number);
-        
-        if($sleep) {
-            \sleep(1);
-        }
         
         $number2 = $function(true);
         $this->assertIsInt($number2);
@@ -45,16 +40,11 @@ class HrtimeTest extends TestCase {
     /**
      * @dataProvider providerTestFunctions
      * @param callable  $function
-     * @param bool     $sleep
      */
-    function testHrtimeAsArray(callable $function, bool $sleep) {
+    function testHrtimeAsArray(callable $function) {
         $arr = $function(false);
         $this->assertIsArray($arr);
         $this->assertCount(2, $arr);
-        
-        if($sleep) {
-            \sleep(1);
-        }
         
         $arr2 = $function(false);
         $this->assertIsArray($arr2);

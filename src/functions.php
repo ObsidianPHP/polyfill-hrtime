@@ -59,10 +59,10 @@ function hrtime_fallback(bool $get_as_number = false) {
     static $timer;
     
     if(!$timer) {
-        $timer = (int) (\microtime(true) * 1e6);
+        $timer = (int) (\microtime(true) * 1e9);
     }
     
-    $now = (int) (\microtime(true) * 1e6);
+    $now = (int) (\microtime(true) * 1e9);
     $nanoseconds = (int) ($now - $timer);
     
     if($get_as_number) {
