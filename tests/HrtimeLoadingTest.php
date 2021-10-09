@@ -28,7 +28,7 @@ class HrtimeLoadingTest extends TestCase {
         \xdebug_stop_function_monitor();
         
         switch(\getenv('EXT_INSTALL', true)) {
-            case 'hrtime uv-beta':
+            case 'hrtime, uv-beta':
             case 'uv-beta':
                 $fun = 'Obsidian\\Polyfill\\Hrtime\\hrtime_ext_uv';
             break;
