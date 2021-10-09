@@ -28,18 +28,15 @@ class HrtimeLoadingTest extends TestCase {
         \xdebug_stop_function_monitor();
         
         switch(\getenv('EXT_INSTALL', true)) {
-            case 'all':
-            case 'uv':
+            case 'hrtime uv-beta':
+            case 'uv-beta':
                 $fun = 'Obsidian\\Polyfill\\Hrtime\\hrtime_ext_uv';
             break;
             case 'hrtime':
                 $fun = 'Obsidian\\Polyfill\\Hrtime\\hrtime_ext_hrtime';
             break;
-            case 'none':
-                $fun = 'Obsidian\\Polyfill\\Hrtime\\hrtime_fallback';
-            break;
             default:
-                throw new \RuntimeException('Unknown "EXT_INSTALL" env var value');
+                $fun = 'Obsidian\\Polyfill\\Hrtime\\hrtime_fallback';
         }
         
         $this->assertSame($fun, $function);
