@@ -27,7 +27,7 @@ jobs:
         with:
           php-version: ${{ matrix.php }}
           extensions: ${{ matrix.EXT_INSTALL }}
-          ini-values: "xdebug.mode=develop"
+          ini-values: xdebug.mode="develop,coverage"
           coverage: xdebug
       - run: composer install --no-interaction --ignore-platform-reqs
       - run: XDEBUG_MODE=coverage vendor/bin/phpunit --configuration phpunit.xml.dist --coverage-text
