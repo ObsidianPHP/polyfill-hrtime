@@ -6,7 +6,7 @@ on:
 
 jobs:
   PHPUnit:
-    name: PHPUnit (PHP ${{ matrix.php }} ${{ matrix.env.EXT_INSTALL }})
+    name: PHPUnit (PHP ${{ matrix.php }} ${{ matrix.EXT_INSTALL }})
     runs-on: ubuntu-20.04
     strategy:
       matrix:
@@ -16,11 +16,7 @@ jobs:
           - 7.3
           - 7.2
           - 7.1
-        env:
-          - EXT_INSTALL=all
-          - EXT_INSTALL=hrtime
-          - EXT_INSTALL=uv
-          - EXT_INSTALL=none
+        EXT_INSTALL: [all, hrtime, uv, none]
     steps:
       - uses: actions/checkout@v2
       - run: EXT_SETUP_PHP = ""
@@ -34,4 +30,6 @@ jobs:
           extensions: $EXT_SETUP_PHP
           coverage: xdebug
       - run: composer install --no-interaction --ignore-platform-reqs
+        env:
+          EXT_INSTALL: ${{ matrix.EXT_INSTALL }}
       - run: XDEBUG_MODE=coverage vendor/bin/phpunit --configuration phpunit.xml.dist --coverage-text
