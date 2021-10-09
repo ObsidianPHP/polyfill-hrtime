@@ -17,13 +17,12 @@ jobs:
           - 7.2
           - 7.1
         EXT_INSTALL: [all, hrtime, uv, none]
+        SETUP_PHP_EXT: ["hrtime uv-beta", "hrtime", "uv-beta", ""]
     steps:
       - uses: actions/checkout@v2
-      - run: EXT_SETUP_PHP = ""
-      - run: if [[ "$EXT_INSTALL" = "all" || "$EXT_INSTALL" = "hrtime" ]]; then EXT_SETUP_PHP = "$EXT_SETUP_PHP hrtime"; fi
-      - run: if [[ "$EXT_INSTALL" = "all" || "$EXT_INSTALL" = "uv" ]]; then EXT_SETUP_PHP = "$EXT_SETUP_PHP uv-beta"; fi
-      - run: export EXT_SETUP_PHP
       - run: if [[ "$EXT_INSTALL" = "all" || "$EXT_INSTALL" = "uv" ]]; then git clone https://github.com/libuv/libuv && cd libuv && git checkout tags/v1.28.0 && sh autogen.sh && ./configure && make && sudo make install && cd ..; fi
+        env:
+          EXT_INSTALL: ${{ matrix.EXT_INSTALL }}
       - uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
