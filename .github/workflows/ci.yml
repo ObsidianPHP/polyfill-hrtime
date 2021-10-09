@@ -6,7 +6,7 @@ on:
 
 jobs:
   PHPUnit:
-    name: PHPUnit (PHP ${{ matrix.php }} ${{ matrix.EXT_INSTALL }})
+    name: PHPUnit (PHP ${{ matrix.php }}/${{ matrix.EXT_INSTALL }})
     runs-on: ubuntu-20.04
     strategy:
       matrix:
@@ -19,13 +19,13 @@ jobs:
         EXT_INSTALL: ["hrtime uv-beta", "hrtime", "uv-beta", ""]
     steps:
       - uses: actions/checkout@v2
-      - run: if [[ "$EXT_INSTALL" = "all" || "$EXT_INSTALL" = "uv" ]]; then git clone https://github.com/libuv/libuv && cd libuv && git checkout tags/v1.28.0 && sh autogen.sh && ./configure && make && sudo make install && cd ..; fi
+      - run: if [[ "$EXT_INSTALL" = "hrtime uv-beta" || "$EXT_INSTALL" = "uv-beta" ]]; then git clone https://github.com/libuv/libuv && cd libuv && git checkout tags/v1.28.0 && sh autogen.sh && ./configure && make && sudo make install && cd ..; fi
         env:
           EXT_INSTALL: ${{ matrix.EXT_INSTALL }}
       - uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          extensions: $EXT_INSTALL
+          extensions: ${{ matrix.EXT_INSTALL }}
           coverage: xdebug
       - run: composer install --no-interaction --ignore-platform-reqs
       - run: XDEBUG_MODE=coverage vendor/bin/phpunit --configuration phpunit.xml.dist --coverage-text
