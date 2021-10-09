@@ -17,10 +17,10 @@ jobs:
           - 7.3
           - 7.2
           - 7.1
-        EXT_INSTALL: ["hrtime uv-beta", "hrtime", "uv-beta", ""]
+        EXT_INSTALL: ["hrtime, uv-beta", "hrtime", "uv-beta", ""]
     steps:
       - uses: actions/checkout@v2
-      - run: if [[ "$EXT_INSTALL" = "hrtime uv-beta" || "$EXT_INSTALL" = "uv-beta" ]]; then git clone https://github.com/libuv/libuv && cd libuv && git checkout tags/v1.28.0 && sh autogen.sh && ./configure && make && sudo make install && cd ..; fi
+      - run: if [[ "$EXT_INSTALL" = "hrtime, uv-beta" || "$EXT_INSTALL" = "uv-beta" ]]; then git clone https://github.com/libuv/libuv && cd libuv && git checkout tags/v1.28.0 && sh autogen.sh && ./configure && make && sudo make install && cd ..; fi
         env:
           EXT_INSTALL: ${{ matrix.EXT_INSTALL }}
       - uses: shivammathur/setup-php@v2
