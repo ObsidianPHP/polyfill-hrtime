@@ -1,4 +1,4 @@
-# polyfill-hrtime [![Build Status](https://travis-ci.org/ObsidianPHP/polyfill-hrtime.svg?branch=master)](https://travis-ci.org/ObsidianPHP/polyfill-hrtime)
+# polyfill-hrtime [![CI status](https://github.com/ObsidianPHP/polyfill-hrtime/workflows/CI/badge.svg)](https://github.com/ObsidianPHP/polyfill-hrtime/actions)
 
 This is an implementation of a complete hrtime which can utilize `uv` and `hrtime`, and not solely `microtime`.
 
