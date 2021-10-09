@@ -6,7 +6,7 @@ on:
 
 jobs:
   PHPUnit:
-    name: PHPUnit (PHP ${{ matrix.php }})
+    name: PHPUnit (PHP ${{ matrix.php }} ${{ matrix.env.EXT_INSTALL }})
     runs-on: ubuntu-20.04
     strategy:
       matrix:
@@ -23,15 +23,15 @@ jobs:
           - EXT_INSTALL=none
     steps:
       - uses: actions/checkout@v2
-      - run: PHP_EXT_INSTALL=""
-      - run: if [[ "$EXT_INSTALL" = "all" || "$EXT_INSTALL" = "hrtime" ]]; then PHP_EXT_INSTALL = "$PHP_EXT_INSTALL hrtime"; fi
-      - run: if [[ "$EXT_INSTALL" = "all" || "$EXT_INSTALL" = "uv" ]]; then PHP_EXT_INSTALL = "$PHP_EXT_INSTALL uv-beta"; fi
-      - run: export PHP_EXT_INSTALL
+      - run: EXT_SETUP_PHP = ""
+      - run: if [[ "$EXT_INSTALL" = "all" || "$EXT_INSTALL" = "hrtime" ]]; then EXT_SETUP_PHP = "$EXT_SETUP_PHP hrtime"; fi
+      - run: if [[ "$EXT_INSTALL" = "all" || "$EXT_INSTALL" = "uv" ]]; then EXT_SETUP_PHP = "$EXT_SETUP_PHP uv-beta"; fi
+      - run: export EXT_SETUP_PHP
       - run: if [[ "$EXT_INSTALL" = "all" || "$EXT_INSTALL" = "uv" ]]; then git clone https://github.com/libuv/libuv && cd libuv && git checkout tags/v1.28.0 && sh autogen.sh && ./configure && make && sudo make install && cd ..; fi
       - uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          extensions: $PHP_EXT_INSTALL
+          extensions: $EXT_SETUP_PHP
           coverage: xdebug
       - run: composer install --no-interaction --ignore-platform-reqs
       - run: XDEBUG_MODE=coverage vendor/bin/phpunit --configuration phpunit.xml.dist --coverage-text
