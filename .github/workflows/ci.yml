@@ -29,7 +29,7 @@ jobs:
           extensions: ${{ matrix.EXT_INSTALL }}
           ini-values: xdebug.mode="develop,coverage"
           coverage: xdebug
-      - run: composer install --no-interaction --ignore-platform-reqs
+      - run: composer install --no-interaction --ignore-platform-reqs --prefer-lowest
       - run: vendor/bin/phpunit --configuration phpunit.xml.dist --coverage-text
         env:
           EXT_INSTALL: ${{ matrix.EXT_INSTALL }}
