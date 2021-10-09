@@ -16,8 +16,7 @@ jobs:
           - 7.3
           - 7.2
           - 7.1
-        EXT_INSTALL: [all, hrtime, uv, none]
-        SETUP_PHP_EXT: ["hrtime uv-beta", "hrtime", "uv-beta", ""]
+        EXT_INSTALL: ["hrtime uv-beta", "hrtime", "uv-beta", ""]
     steps:
       - uses: actions/checkout@v2
       - run: if [[ "$EXT_INSTALL" = "all" || "$EXT_INSTALL" = "uv" ]]; then git clone https://github.com/libuv/libuv && cd libuv && git checkout tags/v1.28.0 && sh autogen.sh && ./configure && make && sudo make install && cd ..; fi
@@ -29,6 +28,6 @@ jobs:
           extensions: $EXT_SETUP_PHP
           coverage: xdebug
       - run: composer install --no-interaction --ignore-platform-reqs
+      - run: XDEBUG_MODE=coverage vendor/bin/phpunit --configuration phpunit.xml.dist --coverage-text
         env:
           EXT_INSTALL: ${{ matrix.EXT_INSTALL }}
-      - run: XDEBUG_MODE=coverage vendor/bin/phpunit --configuration phpunit.xml.dist --coverage-text
