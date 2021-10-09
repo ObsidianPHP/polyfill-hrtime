@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  PHPUnit:
+    name: PHPUnit (PHP ${{ matrix.php }}/${{ matrix.EXT_INSTALL }})
+    runs-on: ubuntu-20.04
+    strategy:
+      fail-fast: false
+      matrix:
+        php:
+          - 8.0
+          - 7.4
+          - 7.3
+          - 7.2
+          - 7.1
+        EXT_INSTALL: ["hrtime, uv-beta", "hrtime", "uv-beta", ""]
+    steps:
+      - uses: actions/checkout@v2
+      - run: if [[ "$EXT_INSTALL" = "hrtime, uv-beta" || "$EXT_INSTALL" = "uv-beta" ]]; then git clone https://github.com/libuv/libuv && cd libuv && git checkout tags/v1.28.0 && sh autogen.sh && ./configure && make && sudo make install && cd ..; fi
+        env:
+          EXT_INSTALL: ${{ matrix.EXT_INSTALL }}
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: ${{ matrix.EXT_INSTALL }}
+          ini-values: xdebug.mode="develop,coverage"
+          coverage: xdebug
+      - run: composer install --no-interaction --ignore-platform-req=ext-hrtime --ignore-platform-req=ext-uv
+      - run: vendor/bin/phpunit --configuration phpunit.xml.dist --coverage-text
+        env:
+          EXT_INSTALL: ${{ matrix.EXT_INSTALL }}
