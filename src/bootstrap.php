@@ -6,7 +6,7 @@
  * License: https://github.com/ObsidianPHP/polyfill-hrtime/blob/master/LICENSE
  */
 
-if(!function_exists('\\Obsidian\\Polyfill\\Hrtime\\hrtime_fallback\\hrtime_fallback')) {
+if(!function_exists('\\Obsidian\\Polyfill\\Hrtime\\hrtime_fallback')) {
     require 'functions.php';
 }
 
